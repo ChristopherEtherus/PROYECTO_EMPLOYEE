@@ -1,0 +1,79 @@
+﻿@{
+    ViewData["Title"] = "Crear Nuevo Tipo de Empleado";
+}
+
+<h1>@ViewData["Title"]</h1>
+<br />
+
+@section styles
+
+{
+    <link href="~/lib/datatables.net-bs5/datatables.bootstrap5.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        .btn-celeste {
+            background-color: #00BFFF; 
+            border-color: #00BFFF;
+        }
+
+            .btn-celeste:hover {
+                background-color: #87CEFA; 
+                border-color: #87CEFA;
+            }
+
+        .form-control-celeste {
+            background-color: #E0FFFF; 
+            border-color: #B0E0E6; 
+        }
+    </style>
+}
+
+<div class="container-fluid">
+    <div class="row mb-3">
+        <div class="col-md-3">
+            <a asp-controller="TypeEmployee" asp-action="Index" class="btn btn-celeste text-white">Regresar</a>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <form id="contactForm" asp-controller="TypeEmployee" asp-action="Save" method="post">
+                @if (!ViewData.ModelState.IsValid)
+
+                {
+                    <div class="alert alert-danger">
+                        @Html.ValidationSummary()
+                    </div>
+                }
+
+                <div class="mb-3">
+                    <label class="form-label" for="Nombre">Tipo</label>
+                    <input class="form-control form-control-celeste" id="Nombre" name="Nombre" type="text" placeholder="Tipo" required />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="IsActive">Status</label>
+                    <select id="IsActive" class="form-control form-control-celeste" name="IsActive" required>
+                        <option value="true">Active</option>
+                        <option value="false">Inactive</option>
+                    </select>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-3">
+                        <button type="submit" class="btn btn-success">Guardar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+
+{
+    <script src="~/lib/datatables.net/datatables.js"></script>
+    <script src="~/lib/datatables.net/datatables.min.js"></script>
+    <script src="~/lib/datatables.net-bs5/datatables.bootstrap5.min.js"></script>
+    <script>let table = new DataTable('#Table');</script>
+}

@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\MANTENIMIENTO B3.props" />
+</Project>

@@ -1,0 +1,178 @@
+﻿@{
+    ViewData["Title"] = "Editar Empleado";
+}
+
+<h1>@ViewData["Title"]</h1>
+<br />
+
+@section styles
+
+{
+    <link href="~/lib/datatables.net-bs5/datatables.bootstrap5.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <style>
+        .btn-celeste {
+            background-color: #00BFFF; 
+            border-color: #00BFFF;
+        }
+
+            .btn-celeste:hover {
+                background-color: #87CEFA; 
+                border-color: #87CEFA;
+            }
+
+        .form-control-celeste {
+            background-color: #E0FFFF; 
+            border-color: #B0E0E6; 
+        }
+    </style>
+}
+
+<div class="container-fluid">
+    <div class="row mb-3">
+        <div class="col-md-3">
+            <a asp-controller="Employee" asp-action="Index" class="btn btn-celeste text-white">Regresar</a>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <form id="contactForm" asp-controller="Employee" asp-action="Update" method="post">
+
+                <!--ID del empleado que se actualizará-->
+                <input type="hidden" name="Id" value="@Model.Id" />
+
+                @if (!ViewData.ModelState.IsValid)
+
+                {
+                    <div class="alert alert-danger">
+                        @Html.ValidationSummary()
+                    </div>
+                }
+
+                <div class="mb-3">
+                    <label class="form-label" for="Nombre">Nombre</label>
+                    <input class="form-control form-control-celeste" id="Nombre" name="Nombre" type="text" value="@Model.Nombre" required />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="Apellido">Apellido</label>
+                    <input class="form-control form-control-celeste" id="Apellido" name="Apellido" type="text" value="@Model.Apellido" required />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="Email">Email</label>
+                    <input class="form-control form-control-celeste" id="Email" name="Email" type="text" value="@Model.Email" required />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="Dui">DUI</label>
+                    <input class="form-control form-control-celeste" id="Dui" name="Dui" type="text" value="@Model.Dui" required />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="NumeroTelefonico">Telefono</label>
+                    <input class="form-control form-control-celeste" id="NumeroTelefonico" name="NumeroTelefonico" type="text" value="@Model.NumeroTelefonico" required />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="TypeEmployeeId">Tipo de Empleado</label>
+                    <select id="TypeEmployeeId" class="form-control form-control-celeste" name="TypeEmployeeId" required>
+                        @foreach (var typeEmployee in ViewBag.TypeEmployees)
+
+                        {
+
+                            var option = new TagBuilder("option");
+
+                            option.Attributes["value"] = typeEmployee.Id.ToString();
+
+
+
+                            if (typeEmployee.Id == Model.TypeEmployeeId)
+
+                            {
+
+                                option.Attributes["selected"] = "selected";
+
+                            }
+
+
+
+                            option.InnerHtml.Append(typeEmployee.Nombre);
+                            @option
+                        }
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="IsActive">Estado</label>
+                    <select id="IsActive" class="form-control form-control-celeste" name="IsActive" required>
+                        @{
+                            var options = new List<TagBuilder>();
+
+
+
+                            var optionTrue = new TagBuilder("option");
+
+                            optionTrue.Attributes["value"] = "true";
+
+                            if (Model.IsActive)
+
+                            {
+
+                                optionTrue.Attributes["selected"] = "selected";
+
+                            }
+
+                            optionTrue.InnerHtml.Append("Activo");
+
+                            options.Add(optionTrue);
+
+
+
+                            var optionFalse = new TagBuilder("option");
+
+                            optionFalse.Attributes["value"] = "false";
+
+                            if (!Model.IsActive)
+
+                            {
+
+                                optionFalse.Attributes["selected"] = "selected";
+
+                            }
+
+                            optionFalse.InnerHtml.Append("Inactivo");
+
+                            options.Add(optionFalse);
+
+
+
+                            foreach (var option in options)
+
+                            {
+                                @option
+                            }
+                        }
+                    </select>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-3">
+                        <button type="submit" class="btn btn-success">Actualizar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+
+{
+    <script src="~/lib/datatables.net/datatables.js"></script>
+    <script src="~/lib/datatables.net-bs5/datatables.bootstrap5.min.js"></script>
+    <!-- Incluye los scripts de Bootstrap si no están ya incluidos -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+}
